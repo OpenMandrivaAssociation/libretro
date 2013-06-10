@@ -14,6 +14,7 @@ License:	GPL
 Url:		http://www.libretro.org/
 # fetched via libretro-fetch.sh from git and re-packed
 Source:		%{name}-%{version}.tar.bz2
+BuildRequires:	pkgconfig(zlib)
 Suggests:	retroarch
 Suggests:	%{name}-bnes
 Suggests:	%{name}-bsnes-accuracy
