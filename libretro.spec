@@ -19,6 +19,7 @@ Source1:	mupen64plus-libretro-1.git.20140916.tar.xz
 Patch0:		libretro-20141007-vba-next-inline.patch
 # Enable 4DO build
 Patch1:		libretro-20141007-build-4do.patch
+BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(zlib)
 Suggests:	retroarch
 Suggests:	%{name}-4do
