@@ -1,0 +1,21 @@
+diff -urN libretro-20141007/libretro-vba_next/src/port.h libretro-20141007-patched/libretro-vba_next/src/port.h
+--- libretro-20141007/libretro-vba_next/src/port.h	2014-10-08 00:15:24.000000000 +1100
++++ libretro-20141007-patched/libretro-vba_next/src/port.h	2014-10-08 00:49:31.364811019 +1100
+@@ -88,16 +88,6 @@
+ #define WRITE32LE(x,v) *((u32 *)x) = (v)
+ #endif
+ 
+-#ifdef INLINE
+- #if defined(_MSC_VER)
+-  #define FORCE_INLINE __forceinline
+- #elif defined(__GNUC__)
+-  #define FORCE_INLINE __attribute__((always_inline))
+- #else
+-  #define FORCE_INLINE INLINE
+- #endif
+-#else
+- #define FORCE_INLINE
+-#endif
++#define FORCE_INLINE
+ 
+ #endif // PORT_H

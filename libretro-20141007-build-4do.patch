@@ -1,0 +1,11 @@
+diff -urN libretro-20141007/libretro-build.sh libretro-20141007-patched/libretro-build.sh
+--- libretro-20141007/libretro-build.sh	2014-10-08 00:16:06.000000000 +1100
++++ libretro-20141007-patched/libretro-build.sh	2014-10-08 03:47:25.911296787 +1100
+@@ -95,6 +95,7 @@
+    $1
+ else
+    build_libretro_2048
++   build_libretro_4do
+    build_libretro_bluemsx
+    build_libretro_fmsx
+    build_libretro_bsnes_cplusplus98
