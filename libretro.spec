@@ -7,18 +7,18 @@
 Summary:	An interface for emulator and game ports
 Name:		libretro
 Version:	20141007
-Release:	1
+Release:	2
 # Actually, various for each core but mostly GPLv2
 License:	GPL
 Group:		Emulators
 Url:		http://www.libretro.org/
 # fetched via libretro-fetch.sh from git and re-packed
 Source0:	%{name}-%{version}.tar.bz2
+Source1:	mupen64plus-libretro-1.git.20140916.tar.xz
 # Disable inlining for VBA Next to fix build
 Patch0:		libretro-20141007-vba-next-inline.patch
 # Enable 4DO build
 Patch1:		libretro-20141007-build-4do.patch
-BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(zlib)
 Suggests:	retroarch
 Suggests:	%{name}-4do
@@ -889,6 +889,10 @@ Yabause core for libretro. It's used to run Sega Saturn games.
 # rm -rf libretro-2048
 # rm -rf libretro-3dengine
 # rm -rf libretro-dinothawr
+
+rm -rf libretro-mupen64plus
+tar -xf %{SOURCE1}
+mv mupen64plus-libretro-1.git.20140916 libretro-mupen64plus
 
 %build
 ./libretro-build.sh
