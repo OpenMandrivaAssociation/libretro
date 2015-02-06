@@ -7,7 +7,7 @@
 Summary:	An interface for emulator and game ports
 Name:		libretro
 Version:	20141007
-Release:	2
+Release:	3
 # Actually, various for each core but mostly GPLv2
 License:	GPL
 Group:		Emulators
