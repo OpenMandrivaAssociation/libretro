@@ -1,0 +1,19 @@
+diff -urN libretro-20170303/libretro-mupen64plus/Makefile.common libretro-20170303-patched/libretro-mupen64plus/Makefile.common
+--- libretro-20170303/libretro-mupen64plus/Makefile.common	2017-03-03 21:29:18.000000000 +1000
++++ libretro-20170303-patched/libretro-mupen64plus/Makefile.common	2017-03-04 04:40:21.069673472 +1000
+@@ -144,7 +144,6 @@
+ 		$(CORE_DIR)/src/r4300/new_dynarec/arm/linkage_arm.S
+ endif
+ ifeq ($(WITH_DYNAREC), x86)
+-	COREFLAGS += -DARCH_MIN_SSE2 -msse -msse2
+ 	DYNAREC_USED = 1
+ 	DYNAFLAGS += -DNEW_DYNAREC=1
+ 	SOURCES_C += \
+@@ -155,7 +154,6 @@
+ 		$(CORE_DIR)/src/r4300/new_dynarec/x86/linkage_x86.asm
+ endif
+ ifeq ($(WITH_DYNAREC), $(filter $(WITH_DYNAREC), x86_64 x64))
+-	COREFLAGS += -DARCH_MIN_SSE2 -msse -msse2
+ 	DYNAREC_USED = 1
+ 	SOURCES_C += $(CORE_DIR)/src/r4300/x86_64/assemble.c \
+ 		$(CORE_DIR)/src/r4300/x86_64/gbc.c \

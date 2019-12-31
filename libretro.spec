@@ -6,21 +6,25 @@
 
 Summary:	An interface for emulator and game ports
 Name:		libretro
-Version:	20141007
-Release:	3
+Version:	20170303
+Release:	1
 # Actually, various for each core but mostly GPLv2
 License:	GPL
 Group:		Emulators
 Url:		http://www.libretro.org/
 # fetched via libretro-fetch.sh from git and re-packed
 Source0:	%{name}-%{version}.tar.bz2
-Source1:	mupen64plus-libretro-1.git.20140916.tar.xz
 # Disable inlining for VBA Next to fix build
-Patch0:		libretro-20141007-vba-next-inline.patch
-# Enable 4DO build
-Patch1:		libretro-20141007-build-4do.patch
+Patch0:		libretro-20170303-vba-next-inline.patch
+# Disable SSE2 Mupen64Plus to fix segfault
+Patch1:		libretro-20170303-mupen64plus-segfault.patch
+
+BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(zlib)
+BuildRequires:	nasm
+BuildRequires:	vim-common
+
 Suggests:	retroarch
 Suggests:	%{name}-4do
 Suggests:	%{name}-bluemsx
@@ -110,6 +114,20 @@ bchunk old_image.bin old_image.cue new_image.iso
 %files 4do
 %{_libdir}/%{name}/4do_libretro.info
 %{_libdir}/%{name}/4do_libretro.so
+
+#----------------------------------------------------------------------------
+
+%package 81
+Summary:	81 core for libretro (ZX81)
+Provides:	libretro-core = %{EVRD}
+
+%description 81
+81 core for libretro. It only emulates the Sinclair ZX81 with 16Kb RAM for now.
+Other machines will be added as time permits.
+
+%files 81
+%{_libdir}/%{name}/81_libretro.info
+%{_libdir}/%{name}/81_libretro.so
 
 #----------------------------------------------------------------------------
 
@@ -317,6 +335,63 @@ DOSBox core for libretro. It's used to run DOS games.
 
 #----------------------------------------------------------------------------
 
+%package emux-chip8
+Summary:	Emux CHIP-8 core for libretro (CHIP-8)
+Provides:	libretro-core = %{EVRD}
+
+%description emux-chip8
+Emux CHIP-8 core for libretro. It's used to run CHIP-8 games.
+
+CHIP-8 is an interpreted programming language, developed by Joseph Weisbecker.
+It was initially used on the COSMAC VIP and Telmac 1800 8-bit microcomputers
+in the mid-1970s. CHIP-8 programs are run on a CHIP-8 virtual machine. It was
+made to allow video games to be more easily programmed for said computers.
+
+%files emux-chip8
+%{_libdir}/%{name}/emux_chip8_libretro.info
+%{_libdir}/%{name}/emux_chip8_libretro.so
+
+#----------------------------------------------------------------------------
+
+%package emux-gb
+Summary:	Emux GB core for libretro (GBC)
+Provides:	libretro-core = %{EVRD}
+
+%description emux-gb
+Emux GB core for libretro. It's used to run Game Boy and Game Boy Color games.
+
+%files emux-gb
+%{_libdir}/%{name}/emux_gb_libretro.info
+%{_libdir}/%{name}/emux_gb_libretro.so
+
+#----------------------------------------------------------------------------
+
+%package emux-nes
+Summary:	Emux NES core for libretro (NES)
+Provides:	libretro-core = %{EVRD}
+
+%description emux-nes
+Emux NES core for libretro. It's used to run Nintendo games.
+
+%files emux-nes
+%{_libdir}/%{name}/emux_nes_libretro.info
+%{_libdir}/%{name}/emux_nes_libretro.so
+
+#----------------------------------------------------------------------------
+
+%package emux-sms
+Summary:	Emux SMS core for libretro (SMS)
+Provides:	libretro-core = %{EVRD}
+
+%description emux-sms
+Emux SMS core for libretro. It's used to run Sega Master System games.
+
+%files emux-sms
+%{_libdir}/%{name}/emux_sms_libretro.info
+%{_libdir}/%{name}/emux_sms_libretro.so
+
+#----------------------------------------------------------------------------
+
 %package fba
 Summary:	Final Burn Alpha core for libretro (arcade)
 Provides:	libretro-core = %{EVRD}
@@ -332,8 +407,8 @@ It should be able to load:
 - and various games on miscellaneous hardware
 
 %files fba
-%{_libdir}/%{name}/fb_alpha_libretro.info
-%{_libdir}/%{name}/fb_alpha_libretro.so
+%{_libdir}/%{name}/fbalpha_libretro.info
+%{_libdir}/%{name}/fbalpha_libretro.so
 
 #----------------------------------------------------------------------------
 
@@ -360,6 +435,19 @@ fMSX core for libretro. It's used to run MSX games.
 %files fmsx
 %{_libdir}/%{name}/fmsx_libretro.info
 %{_libdir}/%{name}/fmsx_libretro.so
+
+#----------------------------------------------------------------------------
+
+%package fuse
+Summary:	Fuse core for libretro (ZX Spectrum)
+Provides:	libretro-core = %{EVRD}
+
+%description fuse
+Fuse core for libretro. It's used to run ZX Spectrum games.
+
+%files fuse
+%{_libdir}/%{name}/fuse_libretro.info
+%{_libdir}/%{name}/fuse_libretro.so
 
 #----------------------------------------------------------------------------
 
@@ -393,6 +481,22 @@ Genesis Plus GX core for libretro. It should be able to load:
 
 #----------------------------------------------------------------------------
 
+%package gpsp
+Summary:	gpSP core for libretro (GBA)
+Provides:	libretro-core = %{EVRD}
+
+%description gpsp
+gpSP core for libretro. It's used to run Game Boy Advance games.
+
+It requires GBA BIOS (gba_bios.bin) so place it in your RetroArch/libretro
+"System Directory" folder.
+
+%files gpsp
+%{_libdir}/%{name}/gpsp_libretro.info
+%{_libdir}/%{name}/gpsp_libretro.so
+
+#----------------------------------------------------------------------------
+
 %package handy
 Summary:	Handy core for libretro (LNX)
 Provides:	libretro-core = %{EVRD}
@@ -403,6 +507,36 @@ Handy core for libretro. It's used to run Atari Lynx games.
 %files handy
 %{_libdir}/%{name}/handy_libretro.info
 %{_libdir}/%{name}/handy_libretro.so
+
+#----------------------------------------------------------------------------
+
+%package hatari
+Summary:	Hatari core for libretro (Atari ST)
+Provides:	libretro-core = %{EVRD}
+
+%description hatari
+Hatari core for libretro. It's used to run Atari ST/STE/TT/Falcon games.
+
+%files hatari
+%{_libdir}/%{name}/hatari_libretro.info
+%{_libdir}/%{name}/hatari_libretro.so
+
+#----------------------------------------------------------------------------
+
+%package mame2014
+Summary:	MAME core for libretro (arcade)
+Provides:	libretro-core = %{EVRD}
+
+%description mame2014
+MAME core for libretro. It's used to run arcade games.
+
+AME stands for Multiple Arcade Machine Emulator. Its purpose is to preserve
+decades of video-game history. As gaming technology continues to rush forward,
+MAME prevents these important "vintage" games from being lost and forgotten.
+
+%files mame2014
+%{_libdir}/%{name}/mame2014_libretro.info
+#{_libdir}/%{name}/mame2014_libretro.so
 
 #----------------------------------------------------------------------------
 
@@ -580,6 +714,19 @@ Meteor core for libretro. It's used to run Game Boy Advance games.
 
 #----------------------------------------------------------------------------
 
+%package mgba
+Summary:	mGBA core for libretro (GBA)
+Provides:	libretro-core = %{EVRD}
+
+%description mgba
+mGBA core for libretro. It's used to run Game Boy Advance games.
+
+%files mgba
+%{_libdir}/%{name}/mgba_libretro.info
+%{_libdir}/%{name}/mgba_libretro.so
+
+#----------------------------------------------------------------------------
+
 %package mupen64plus
 Summary:	Mupen64 Plus core for libretro (N64)
 Provides:	libretro-core = %{EVRD}
@@ -647,6 +794,24 @@ PCSX-ReARMed core for libretro. It's used to run Sony Playstation 1 games.
 
 #----------------------------------------------------------------------------
 
+%package picodrive
+Summary:	Picodrive core for libretro (SMD etc)
+Provides:	libretro-core = %{EVRD}
+
+%description picodrive
+Picodrive core for libretro. It should be able to load:
+- Genesis/Mega Drive
+- Sega/Mega CD
+- Master System
+- 32X
+- Pico
+
+%files picodrive
+%{_libdir}/%{name}/picodrive_libretro.info
+%{_libdir}/%{name}/picodrive_libretro.so
+
+#----------------------------------------------------------------------------
+
 %package ppsspp
 Summary:	PPSSPP core for libretro (PSP)
 Provides:	libretro-core = %{EVRD}
@@ -705,7 +870,6 @@ Or just set "System Directory" to %{_libdir}/%{name}/prosystem/
 %{_libdir}/%{name}/prosystem_libretro.info
 %{_libdir}/%{name}/prosystem_libretro.so
 %dir %attr(0777,root,root) %{_libdir}/%{name}/prosystem
-%{_libdir}/%{name}/prosystem/ProSystem.dat
 
 #----------------------------------------------------------------------------
 
@@ -749,18 +913,42 @@ SNES9x core for libretro. It's used to run Super Nintendo games.
 
 #----------------------------------------------------------------------------
 
-%package snes9x-next
-Summary:	SNES9x Next core for libretro (SNES)
+%package snes9x2005
+Summary:	SNES9x 2005 (ex-CATSFC) core for libretro (SNES)
 Provides:	libretro-core = %{EVRD}
+Provides:	%{name}-catsfc = %{EVRD}
+Obsoletes:	%{name}-catsfc < 20170303
 
-%description snes9x-next
-SNES9x Next core for libretro. It's used to run Super Nintendo games.
+%description snes9x2005
+SNES9x 2005 core for libretro. It's used to run Super Nintendo games.
 
-SNES9x Next is an optimized port/rewrite of SNES9x 1.52+ to libretro.
+Based on:
+* Snes9x 1.43, by the Snes9x team (with research by the ZSNES folks, anomie,
+  zsKnight, etc.)
+* NDSSFC 1.06, by the Supercard team (porting to the MIPS processor)
+* BAGSFC, by BassAceGold (improving over NDSSFC)
+* CATSFC, by ShadauxCat and Nebuleon (improving over BAGSFC)
 
-%files snes9x-next
-%{_libdir}/%{name}/snes9x_next_libretro.info
-%{_libdir}/%{name}/snes9x_next_libretro.so
+%files snes9x2005
+%{_libdir}/%{name}/snes9x2005_libretro.info
+%{_libdir}/%{name}/snes9x2005_libretro.so
+
+#----------------------------------------------------------------------------
+
+%package snes9x2010
+Summary:	SNES9x 2010 (ex-SNES9x Next) core for libretro (SNES)
+Provides:	libretro-core = %{EVRD}
+Provides:	%{name}-snes9x-next = %{EVRD}
+Obsoletes:	%{name}-snes9x-next < 20170303
+
+%description snes9x2010
+SNES9x 2010 core for libretro. It's used to run Super Nintendo games.
+
+SNES9x 2010 is an optimized port/rewrite of SNES9x 1.52+ to libretro.
+
+%files snes9x2010
+%{_libdir}/%{name}/snes9x2010_libretro.info
+%{_libdir}/%{name}/snes9x2010_libretro.so
 
 #----------------------------------------------------------------------------
 
@@ -877,34 +1065,72 @@ Yabause core for libretro. It's used to run Sega Saturn games.
 %patch0 -p1
 %patch1 -p1
 # Remove these after fetching to make tarball smaller
-# Virtual memory exhausted during build
-# rm -rf libretro-picodrive
 # Not ready yet
-# rm -rf libretro-hatari
+# rm -rf libretro-blastem
+# rm -rf libretro-cap32
+# rm -rf libretro-fsuae
 # rm -rf libretro-mame
-# rm -rf libretro-mame078
-# rm -rf libretro-mame139
-# rm -rf libretro-uae
+# rm -rf libretro-mame2000
+# rm -rf libretro-mame2003
+# rm -rf libretro-mame2010
+# rm -rf libretro-mednafen_saturn
+# rm -rf libretro-melonds
+# rm -rf libretro-parallel_n64
+# rm -rf libretro-pcem
+# rm -rf libretro-puae
+# rm -rf libretro-reicast
+# rm -rf libretro-rustation
+# rm -rf libretro-tempgba
 # Just not needed
 # rm -rf libretro-bsnes_cplusplus98
 # rm -rf libretro-2048
 # rm -rf libretro-3dengine
+# rm -rf libretro-craft
 # rm -rf libretro-dinothawr
+# rm -rf libretro-easyrpg
+# rm -rf libretro-fbalpha2012
+# rm -rf libretro-fbalpha2012_cps1
+# rm -rf libretro-fbalpha2012_cps2
+# rm -rf libretro-fbalpha2012_neogeo
+# rm -rf libretro-ffmpeg
+# rm -rf libretro-gme
+# rm -rf libretro-gw
+# rm -rf libretro-lutro
+# rm -rf libretro-pascal_pong
+# rm -rf libretro-stonesoup
+# rm -rf libretro-video_processor
+# ARM version
+# rm -rf libretro-pcsx1
+# rm -rf libretro-psp1
+# Then cleanup libretro-ppsspp from bundled libraries for Windows, Android etc
 
-rm -rf libretro-mupen64plus
-tar -xf %{SOURCE1}
-mv mupen64plus-libretro-1.git.20140916 libretro-mupen64plus
+%ifarch %{ix86}
+cp libretro-emux/libretro/Makefile.linux_x86 libretro-emux/libretro/Makefile
+%else
+cp libretro-emux/libretro/Makefile.linux_x86_64 libretro-emux/libretro/Makefile
+%endif
 
 %build
 ./libretro-build.sh
+
+# Manually build stuff that fails due to build script errors
+pushd libretro-emux/libretro/
+%make MACHINE=chip8 SOEXT=.so
+%make MACHINE=gb SOEXT=.so
+%make MACHINE=nes SOEXT=.so
+%make MACHINE=sms SOEXT=.so
+cp emux_chip8_libretro.so ../../dist/unix/
+cp emux_gb_libretro.so ../../dist/unix/
+cp emux_nes_libretro.so ../../dist/unix/
+cp emux_sms_libretro.so ../../dist/unix/
+popd
 
 %install
 mkdir -p %{buildroot}%{_libdir}/%{name}
 ./libretro-install.sh %{buildroot}%{_libdir}/%{name}
 
-# ProSystem system files
+# ProSystem system files path
 mkdir -p %{buildroot}%{_libdir}/%{name}/prosystem/
-install -m 0644 libretro-prosystem/ProSystem.dat %{buildroot}%{_libdir}/%{name}/prosystem/ProSystem.dat
 
 # PPSSPP system files
 mkdir -p %{buildroot}%{_libdir}/%{name}/PPSSPP/
@@ -914,24 +1140,63 @@ cp -a libretro-ppsspp/assets/shaders %{buildroot}%{_libdir}/%{name}/PPSSPP/
 cp -a libretro-ppsspp/assets/* %{buildroot}%{_libdir}/%{name}/PPSSPP/
 
 # Remove installed info files that we don't use yet
+rm -f %{buildroot}%{_libdir}/%{name}/00_example_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/2048_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/3dengine_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/advanced_tests_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/atari800_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/beetle_psx_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/blastem_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/bsnes_cplusplus98_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/cap32_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/craft_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/cruzes_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/dinothawr_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/fba_cores_cps1_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/fba_cores_cps2_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/fba_cores_neo_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/dolphin_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/dolphin_launcher_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/easyrpg_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/fbalpha2012_cps1_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/fbalpha2012_cps2_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/fbalpha2012_cps3_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/fbalpha2012_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/fbalpha2012_neogeo_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/ffmpeg_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/hatari_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/fsuae_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/gme_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/gw_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/imageviewer_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/imame4all_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/mame078_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/mame2010_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/lutro_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/mame_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/mess_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mame2000_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mame2003_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mame2003_midway_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mame2010_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mame2016_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mednafen_psx_hw_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mednafen_saturn_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/melonds_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mess*_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mrboom_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mupen64plus_gles3_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/parallel_n64*_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/pascal_pong_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/pcem_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/pcsx_rearmed_interpreter_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/pcsx_rearmed_libretro_neon.info
-rm -f %{buildroot}%{_libdir}/%{name}/picodrive_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/pocketsnes_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/pcsx1_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/pokemini_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/psp1_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/puae_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/reicast*_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/remotejoy_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/rustation_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/snes9x2002_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/snes9x2005_plus_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/stonesoup_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/tempgba_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/test*_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/ume_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/ume2014_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/uzem_libretro.info
 
