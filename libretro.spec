@@ -6,21 +6,25 @@
 
 Summary:	An interface for emulator and game ports
 Name:		libretro
-Version:	20141007
-Release:	3
+Version:	20170303
+Release:	1
 # Actually, various for each core but mostly GPLv2
 License:	GPL
 Group:		Emulators
 Url:		http://www.libretro.org/
 # fetched via libretro-fetch.sh from git and re-packed
 Source0:	%{name}-%{version}.tar.bz2
-Source1:	mupen64plus-libretro-1.git.20140916.tar.xz
 # Disable inlining for VBA Next to fix build
-Patch0:		libretro-20141007-vba-next-inline.patch
-# Enable 4DO build
-Patch1:		libretro-20141007-build-4do.patch
+Patch0:		libretro-20170303-vba-next-inline.patch
+# Disable SSE2 Mupen64Plus to fix segfault
+Patch1:		libretro-20170303-mupen64plus-segfault.patch
+
+BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(zlib)
+BuildRequires:	nasm
+BuildRequires:	vim-common
+
 Suggests:	retroarch
 Suggests:	%{name}-4do
 Suggests:	%{name}-bluemsx
