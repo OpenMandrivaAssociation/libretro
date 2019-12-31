@@ -523,20 +523,20 @@ Hatari core for libretro. It's used to run Atari ST/STE/TT/Falcon games.
 
 #----------------------------------------------------------------------------
 
-%package mame2014
-Summary:	MAME core for libretro (arcade)
-Provides:	libretro-core = %{EVRD}
-
-%description mame2014
-MAME core for libretro. It's used to run arcade games.
-
-MAME stands for Multiple Arcade Machine Emulator. Its purpose is to preserve
-decades of video-game history. As gaming technology continues to rush forward,
-MAME prevents these important "vintage" games from being lost and forgotten.
-
-%files mame2014
-%{_libdir}/%{name}/mame2014_libretro.info
-%{_libdir}/%{name}/mame2014_libretro.so
+#package mame2014
+#Summary:	MAME core for libretro (arcade)
+#Provides:	libretro-core = %{EVRD}
+#
+#description mame2014
+#MAME core for libretro. It's used to run arcade games.
+#
+#AME stands for Multiple Arcade Machine Emulator. Its purpose is to preserve
+#decades of video-game history. As gaming technology continues to rush forward,
+#MAME prevents these important "vintage" games from being lost and forgotten.
+#
+#files mame2014
+#{_libdir}/%{name}/mame2014_libretro.info
+#{_libdir}/%{name}/mame2014_libretro.so
 
 #----------------------------------------------------------------------------
 
