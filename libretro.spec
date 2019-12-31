@@ -905,8 +905,8 @@ mkdir -p %{buildroot}%{_libdir}/%{name}
 ./libretro-install.sh %{buildroot}%{_libdir}/%{name}
 
 # ProSystem system files
-mkdir -p %{buildroot}%{_libdir}/%{name}/prosystem/
-install -m 0644 libretro-prosystem/ProSystem.dat %{buildroot}%{_libdir}/%{name}/prosystem/ProSystem.dat
+#mkdir -p %{buildroot}%{_libdir}/%{name}/prosystem/
+#install -m 0644 libretro-prosystem/ProSystem.dat %{buildroot}%{_libdir}/%{name}/prosystem/ProSystem.dat
 
 # PPSSPP system files
 mkdir -p %{buildroot}%{_libdir}/%{name}/PPSSPP/
