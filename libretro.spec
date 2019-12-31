@@ -535,8 +535,8 @@ decades of video-game history. As gaming technology continues to rush forward,
 MAME prevents these important "vintage" games from being lost and forgotten.
 
 %files mame2014
-#{_libdir}/%{name}/mame2014_libretro.info
-%{_libdir}/%{name}/mame2014_libretro.so
+%{_libdir}/%{name}/mame2014_libretro.info
+#{_libdir}/%{name}/mame2014_libretro.so
 
 #----------------------------------------------------------------------------
 
