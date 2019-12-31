@@ -1065,32 +1065,72 @@ Yabause core for libretro. It's used to run Sega Saturn games.
 %patch0 -p1
 %patch1 -p1
 # Remove these after fetching to make tarball smaller
-# Virtual memory exhausted during build
-# rm -rf libretro-picodrive
 # Not ready yet
-# rm -rf libretro-hatari
+# rm -rf libretro-blastem
+# rm -rf libretro-cap32
+# rm -rf libretro-fsuae
 # rm -rf libretro-mame
-# rm -rf libretro-mame078
-# rm -rf libretro-mame139
-# rm -rf libretro-uae
+# rm -rf libretro-mame2000
+# rm -rf libretro-mame2003
+# rm -rf libretro-mame2010
+# rm -rf libretro-mednafen_saturn
+# rm -rf libretro-melonds
+# rm -rf libretro-parallel_n64
+# rm -rf libretro-pcem
+# rm -rf libretro-puae
+# rm -rf libretro-reicast
+# rm -rf libretro-rustation
+# rm -rf libretro-tempgba
 # Just not needed
 # rm -rf libretro-bsnes_cplusplus98
 # rm -rf libretro-2048
 # rm -rf libretro-3dengine
+# rm -rf libretro-craft
 # rm -rf libretro-dinothawr
+# rm -rf libretro-easyrpg
+# rm -rf libretro-fbalpha2012
+# rm -rf libretro-fbalpha2012_cps1
+# rm -rf libretro-fbalpha2012_cps2
+# rm -rf libretro-fbalpha2012_neogeo
+# rm -rf libretro-ffmpeg
+# rm -rf libretro-gme
+# rm -rf libretro-gw
+# rm -rf libretro-lutro
+# rm -rf libretro-pascal_pong
+# rm -rf libretro-stonesoup
+# rm -rf libretro-video_processor
+# ARM version
+# rm -rf libretro-pcsx1
+# rm -rf libretro-psp1
+# Then cleanup libretro-ppsspp from bundled libraries for Windows, Android etc
 
-rm -rf libretro-mupen64plus
+%ifarch %{ix86}
+cp libretro-emux/libretro/Makefile.linux_x86 libretro-emux/libretro/Makefile
+%else
+cp libretro-emux/libretro/Makefile.linux_x86_64 libretro-emux/libretro/Makefile
+%endif
 
 %build
 ./libretro-build.sh
+
+# Manually build stuff that fails due to build script errors
+pushd libretro-emux/libretro/
+%make MACHINE=chip8 SOEXT=.so
+%make MACHINE=gb SOEXT=.so
+%make MACHINE=nes SOEXT=.so
+%make MACHINE=sms SOEXT=.so
+cp emux_chip8_libretro.so ../../dist/unix/
+cp emux_gb_libretro.so ../../dist/unix/
+cp emux_nes_libretro.so ../../dist/unix/
+cp emux_sms_libretro.so ../../dist/unix/
+popd
 
 %install
 mkdir -p %{buildroot}%{_libdir}/%{name}
 ./libretro-install.sh %{buildroot}%{_libdir}/%{name}
 
-# ProSystem system files
-#mkdir -p %{buildroot}%{_libdir}/%{name}/prosystem/
-#install -m 0644 libretro-prosystem/ProSystem.dat %{buildroot}%{_libdir}/%{name}/prosystem/ProSystem.dat
+# ProSystem system files path
+mkdir -p %{buildroot}%{_libdir}/%{name}/prosystem/
 
 # PPSSPP system files
 mkdir -p %{buildroot}%{_libdir}/%{name}/PPSSPP/
@@ -1100,24 +1140,63 @@ cp -a libretro-ppsspp/assets/shaders %{buildroot}%{_libdir}/%{name}/PPSSPP/
 cp -a libretro-ppsspp/assets/* %{buildroot}%{_libdir}/%{name}/PPSSPP/
 
 # Remove installed info files that we don't use yet
+rm -f %{buildroot}%{_libdir}/%{name}/00_example_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/2048_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/3dengine_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/advanced_tests_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/atari800_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/beetle_psx_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/blastem_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/bsnes_cplusplus98_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/cap32_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/craft_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/cruzes_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/dinothawr_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/fba_cores_cps1_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/fba_cores_cps2_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/fba_cores_neo_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/dolphin_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/dolphin_launcher_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/easyrpg_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/fbalpha2012_cps1_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/fbalpha2012_cps2_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/fbalpha2012_cps3_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/fbalpha2012_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/fbalpha2012_neogeo_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/ffmpeg_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/hatari_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/fsuae_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/gme_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/gw_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/imageviewer_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/imame4all_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/mame078_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/mame2010_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/lutro_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/mame_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/mess_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mame2000_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mame2003_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mame2003_midway_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mame2010_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mame2016_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mednafen_psx_hw_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mednafen_saturn_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/melonds_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mess*_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mrboom_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/mupen64plus_gles3_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/parallel_n64*_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/pascal_pong_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/pcem_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/pcsx_rearmed_interpreter_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/pcsx_rearmed_libretro_neon.info
-rm -f %{buildroot}%{_libdir}/%{name}/picodrive_libretro.info
-rm -f %{buildroot}%{_libdir}/%{name}/pocketsnes_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/pcsx1_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/pokemini_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/psp1_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/puae_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/reicast*_libretro.info
 rm -f %{buildroot}%{_libdir}/%{name}/remotejoy_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/rustation_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/snes9x2002_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/snes9x2005_plus_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/stonesoup_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/tempgba_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/test*_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/ume_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/ume2014_libretro.info
+rm -f %{buildroot}%{_libdir}/%{name}/uzem_libretro.info
 
