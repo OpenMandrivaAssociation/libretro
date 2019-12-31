@@ -117,6 +117,20 @@ bchunk old_image.bin old_image.cue new_image.iso
 
 #----------------------------------------------------------------------------
 
+%package 81
+Summary:	81 core for libretro (ZX81)
+Provides:	libretro-core = %{EVRD}
+
+%description 81
+81 core for libretro. It only emulates the Sinclair ZX81 with 16Kb RAM for now.
+Other machines will be added as time permits.
+
+%files 81
+%{_libdir}/%{name}/81_libretro.info
+%{_libdir}/%{name}/81_libretro.so
+
+#----------------------------------------------------------------------------
+
 %package bluemsx
 Summary:	blueMSX core for libretro (MSX)
 Provides:	libretro-core = %{EVRD}
@@ -321,6 +335,63 @@ DOSBox core for libretro. It's used to run DOS games.
 
 #----------------------------------------------------------------------------
 
+%package emux-chip8
+Summary:	Emux CHIP-8 core for libretro (CHIP-8)
+Provides:	libretro-core = %{EVRD}
+
+%description emux-chip8
+Emux CHIP-8 core for libretro. It's used to run CHIP-8 games.
+
+CHIP-8 is an interpreted programming language, developed by Joseph Weisbecker.
+It was initially used on the COSMAC VIP and Telmac 1800 8-bit microcomputers
+in the mid-1970s. CHIP-8 programs are run on a CHIP-8 virtual machine. It was
+made to allow video games to be more easily programmed for said computers.
+
+%files emux-chip8
+%{_libdir}/%{name}/emux_chip8_libretro.info
+%{_libdir}/%{name}/emux_chip8_libretro.so
+
+#----------------------------------------------------------------------------
+
+%package emux-gb
+Summary:	Emux GB core for libretro (GBC)
+Provides:	libretro-core = %{EVRD}
+
+%description emux-gb
+Emux GB core for libretro. It's used to run Game Boy and Game Boy Color games.
+
+%files emux-gb
+%{_libdir}/%{name}/emux_gb_libretro.info
+%{_libdir}/%{name}/emux_gb_libretro.so
+
+#----------------------------------------------------------------------------
+
+%package emux-nes
+Summary:	Emux NES core for libretro (NES)
+Provides:	libretro-core = %{EVRD}
+
+%description emux-nes
+Emux NES core for libretro. It's used to run Nintendo games.
+
+%files emux-nes
+%{_libdir}/%{name}/emux_nes_libretro.info
+%{_libdir}/%{name}/emux_nes_libretro.so
+
+#----------------------------------------------------------------------------
+
+%package emux-sms
+Summary:	Emux SMS core for libretro (SMS)
+Provides:	libretro-core = %{EVRD}
+
+%description emux-sms
+Emux SMS core for libretro. It's used to run Sega Master System games.
+
+%files emux-sms
+%{_libdir}/%{name}/emux_sms_libretro.info
+%{_libdir}/%{name}/emux_sms_libretro.so
+
+#----------------------------------------------------------------------------
+
 %package fba
 Summary:	Final Burn Alpha core for libretro (arcade)
 Provides:	libretro-core = %{EVRD}
@@ -336,8 +407,8 @@ It should be able to load:
 - and various games on miscellaneous hardware
 
 %files fba
-%{_libdir}/%{name}/fb_alpha_libretro.info
-%{_libdir}/%{name}/fb_alpha_libretro.so
+%{_libdir}/%{name}/fbalpha_libretro.info
+%{_libdir}/%{name}/fbalpha_libretro.so
 
 #----------------------------------------------------------------------------
 
@@ -364,6 +435,19 @@ fMSX core for libretro. It's used to run MSX games.
 %files fmsx
 %{_libdir}/%{name}/fmsx_libretro.info
 %{_libdir}/%{name}/fmsx_libretro.so
+
+#----------------------------------------------------------------------------
+
+%package fuse
+Summary:	Fuse core for libretro (ZX Spectrum)
+Provides:	libretro-core = %{EVRD}
+
+%description fuse
+Fuse core for libretro. It's used to run ZX Spectrum games.
+
+%files fuse
+%{_libdir}/%{name}/fuse_libretro.info
+%{_libdir}/%{name}/fuse_libretro.so
 
 #----------------------------------------------------------------------------
 
@@ -397,6 +481,22 @@ Genesis Plus GX core for libretro. It should be able to load:
 
 #----------------------------------------------------------------------------
 
+%package gpsp
+Summary:	gpSP core for libretro (GBA)
+Provides:	libretro-core = %{EVRD}
+
+%description gpsp
+gpSP core for libretro. It's used to run Game Boy Advance games.
+
+It requires GBA BIOS (gba_bios.bin) so place it in your RetroArch/libretro
+"System Directory" folder.
+
+%files gpsp
+%{_libdir}/%{name}/gpsp_libretro.info
+%{_libdir}/%{name}/gpsp_libretro.so
+
+#----------------------------------------------------------------------------
+
 %package handy
 Summary:	Handy core for libretro (LNX)
 Provides:	libretro-core = %{EVRD}
@@ -407,6 +507,36 @@ Handy core for libretro. It's used to run Atari Lynx games.
 %files handy
 %{_libdir}/%{name}/handy_libretro.info
 %{_libdir}/%{name}/handy_libretro.so
+
+#----------------------------------------------------------------------------
+
+%package hatari
+Summary:	Hatari core for libretro (Atari ST)
+Provides:	libretro-core = %{EVRD}
+
+%description hatari
+Hatari core for libretro. It's used to run Atari ST/STE/TT/Falcon games.
+
+%files hatari
+%{_libdir}/%{name}/hatari_libretro.info
+%{_libdir}/%{name}/hatari_libretro.so
+
+#----------------------------------------------------------------------------
+
+%package mame2014
+Summary:	MAME core for libretro (arcade)
+Provides:	libretro-core = %{EVRD}
+
+%description mame2014
+MAME core for libretro. It's used to run arcade games.
+
+MAME stands for Multiple Arcade Machine Emulator. Its purpose is to preserve
+decades of video-game history. As gaming technology continues to rush forward,
+MAME prevents these important "vintage" games from being lost and forgotten.
+
+%files mame2014
+%{_libdir}/%{name}/mame2014_libretro.info
+%{_libdir}/%{name}/mame2014_libretro.so
 
 #----------------------------------------------------------------------------
 
@@ -584,6 +714,19 @@ Meteor core for libretro. It's used to run Game Boy Advance games.
 
 #----------------------------------------------------------------------------
 
+%package mgba
+Summary:	mGBA core for libretro (GBA)
+Provides:	libretro-core = %{EVRD}
+
+%description mgba
+mGBA core for libretro. It's used to run Game Boy Advance games.
+
+%files mgba
+%{_libdir}/%{name}/mgba_libretro.info
+%{_libdir}/%{name}/mgba_libretro.so
+
+#----------------------------------------------------------------------------
+
 %package mupen64plus
 Summary:	Mupen64 Plus core for libretro (N64)
 Provides:	libretro-core = %{EVRD}
@@ -651,6 +794,24 @@ PCSX-ReARMed core for libretro. It's used to run Sony Playstation 1 games.
 
 #----------------------------------------------------------------------------
 
+%package picodrive
+Summary:	Picodrive core for libretro (SMD etc)
+Provides:	libretro-core = %{EVRD}
+
+%description picodrive
+Picodrive core for libretro. It should be able to load:
+- Genesis/Mega Drive
+- Sega/Mega CD
+- Master System
+- 32X
+- Pico
+
+%files picodrive
+%{_libdir}/%{name}/picodrive_libretro.info
+%{_libdir}/%{name}/picodrive_libretro.so
+
+#----------------------------------------------------------------------------
+
 %package ppsspp
 Summary:	PPSSPP core for libretro (PSP)
 Provides:	libretro-core = %{EVRD}
@@ -709,7 +870,6 @@ Or just set "System Directory" to %{_libdir}/%{name}/prosystem/
 %{_libdir}/%{name}/prosystem_libretro.info
 %{_libdir}/%{name}/prosystem_libretro.so
 %dir %attr(0777,root,root) %{_libdir}/%{name}/prosystem
-%{_libdir}/%{name}/prosystem/ProSystem.dat
 
 #----------------------------------------------------------------------------
 
@@ -753,18 +913,42 @@ SNES9x core for libretro. It's used to run Super Nintendo games.
 
 #----------------------------------------------------------------------------
 
-%package snes9x-next
-Summary:	SNES9x Next core for libretro (SNES)
+%package snes9x2005
+Summary:	SNES9x 2005 (ex-CATSFC) core for libretro (SNES)
 Provides:	libretro-core = %{EVRD}
+Provides:	%{name}-catsfc = %{EVRD}
+Obsoletes:	%{name}-catsfc < 20170303
 
-%description snes9x-next
-SNES9x Next core for libretro. It's used to run Super Nintendo games.
+%description snes9x2005
+SNES9x 2005 core for libretro. It's used to run Super Nintendo games.
 
-SNES9x Next is an optimized port/rewrite of SNES9x 1.52+ to libretro.
+Based on:
+* Snes9x 1.43, by the Snes9x team (with research by the ZSNES folks, anomie,
+  zsKnight, etc.)
+* NDSSFC 1.06, by the Supercard team (porting to the MIPS processor)
+* BAGSFC, by BassAceGold (improving over NDSSFC)
+* CATSFC, by ShadauxCat and Nebuleon (improving over BAGSFC)
 
-%files snes9x-next
-%{_libdir}/%{name}/snes9x_next_libretro.info
-%{_libdir}/%{name}/snes9x_next_libretro.so
+%files snes9x2005
+%{_libdir}/%{name}/snes9x2005_libretro.info
+%{_libdir}/%{name}/snes9x2005_libretro.so
+
+#----------------------------------------------------------------------------
+
+%package snes9x2010
+Summary:	SNES9x 2010 (ex-SNES9x Next) core for libretro (SNES)
+Provides:	libretro-core = %{EVRD}
+Provides:	%{name}-snes9x-next = %{EVRD}
+Obsoletes:	%{name}-snes9x-next < 20170303
+
+%description snes9x2010
+SNES9x 2010 core for libretro. It's used to run Super Nintendo games.
+
+SNES9x 2010 is an optimized port/rewrite of SNES9x 1.52+ to libretro.
+
+%files snes9x2010
+%{_libdir}/%{name}/snes9x2010_libretro.info
+%{_libdir}/%{name}/snes9x2010_libretro.so
 
 #----------------------------------------------------------------------------
 
