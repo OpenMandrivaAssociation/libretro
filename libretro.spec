@@ -896,8 +896,6 @@ Yabause core for libretro. It's used to run Sega Saturn games.
 # rm -rf libretro-dinothawr
 
 rm -rf libretro-mupen64plus
-tar -xf %{SOURCE1}
-mv mupen64plus-libretro-1.git.20140916 libretro-mupen64plus
 
 %build
 ./libretro-build.sh
