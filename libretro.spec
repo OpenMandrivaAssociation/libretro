@@ -11,7 +11,7 @@ Release:	1
 # Actually, various for each core but mostly GPLv2
 License:	GPL
 Group:		Emulators
-Url:		http://www.libretro.org/
+Url:		https://www.libretro.org/
 # fetched via libretro-fetch.sh from git and re-packed
 Source0:	%{name}-%{version}.tar.bz2
 # Disable inlining for VBA Next to fix build
