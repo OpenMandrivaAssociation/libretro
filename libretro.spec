@@ -19,6 +19,7 @@ Patch0:		libretro-20170303-vba-next-inline.patch
 # Disable SSE2 Mupen64Plus to fix segfault
 Patch1:		libretro-20170303-mupen64plus-segfault.patch
 
+BuildRequires:	make
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(zlib)
